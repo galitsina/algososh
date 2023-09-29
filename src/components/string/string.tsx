@@ -25,6 +25,7 @@ export const StringComponent: React.FC = () => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    reverseString(letters);
   };
 
   const reverseString = async (arr: string[]) => {
@@ -74,9 +75,7 @@ export const StringComponent: React.FC = () => {
           />
           <Button
             text={"Развернуть"}
-            onClick={() => {
-              reverseString(letters);
-            }}
+            type='submit'
             disabled={isButtonActive}
             isLoader={isButtonActive}
           />
