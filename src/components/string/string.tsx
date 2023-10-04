@@ -13,11 +13,12 @@ export const StringComponent: React.FC = () => {
   const { handleChange } = useForm({ string: "" });
   const [pointers, setPointers] = useState({ start: -1, end: -1 });
   const [letters, setLetters] = useState<string[]>([]);
-  const [isButtonActive, setButtonActive] = useState(false);
-
+  const [isButtonActive, setButtonActive] = useState(true);
+  const [loader, setLoader] = useState(false);
   const { start, end } = pointers;
 
   const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setButtonActive(false);
     handleChange(e);
     setLetters(e.target.value.split(""));
     setPointers({ start: -1, end: -1 });
@@ -30,6 +31,7 @@ export const StringComponent: React.FC = () => {
 
   const reverseString = async (arr: string[]) => {
     setButtonActive(true);
+    setLoader(true);
     let start = 0;
     let end = arr.length - 1;
     
@@ -45,6 +47,7 @@ export const StringComponent: React.FC = () => {
     start++
     setPointers({start, end});
     setButtonActive(false);
+    setLoader(false);
     return arr;
   };
 
@@ -77,7 +80,7 @@ export const StringComponent: React.FC = () => {
             text={"Развернуть"}
             type='submit'
             disabled={isButtonActive}
-            isLoader={isButtonActive}
+            isLoader={loader}
           />
         </form>
         {Boolean(letters) && (

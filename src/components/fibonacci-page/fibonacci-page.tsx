@@ -10,22 +10,23 @@ import { SHORT_DELAY_IN_MS } from "../../constants/delays";
 
 export const FibonacciPage: React.FC = () => {
   const { values, handleChange, setValues } = useForm({ fibonacci: "" });
-  const [isButtonActive, setButtonActive] = useState(false);
+  const [isButtonActive, setButtonActive] = useState(true);
+  const [loader, setLoader] = useState(false);
   const [fibArray, setFibArray] = useState<number[]>([]);
   const value = Number(values.fibonacci);
 
   const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setButtonActive(false);
     handleChange(e);
   };
 
   const calculateFibonacci = async (number: number) => {
     setButtonActive(true);
+    setLoader(true);
     let arr: number[] = [];
     for (let i = 0; i <= number; i++) {
-      if (i === 0) {
-        arr[0] = 0;
-      } else if (i === 1) {
-        arr[1] = 1;
+      if (i < 2) {
+        arr = [1, 1];
       } else {
         arr.push(arr[i - 2] + arr[i - 1]);
       }
@@ -33,6 +34,7 @@ export const FibonacciPage: React.FC = () => {
       await delay(SHORT_DELAY_IN_MS);
     }
     setButtonActive(false);
+    setLoader(false);
     return arr;
   };
 
@@ -56,10 +58,9 @@ export const FibonacciPage: React.FC = () => {
             text={"Рассчитать"}
             type='submit'
             disabled={isButtonActive}
-            isLoader={isButtonActive}
+            isLoader={loader}
           />
-        </form>
-        {
+        </form>      
           <div className={styles.circles_container}>
             {fibArray.map((letter, index) => (
               <Circle
@@ -69,7 +70,6 @@ export const FibonacciPage: React.FC = () => {
               />
             ))}
           </div>
-        }
       </div>
     </SolutionLayout>
   );

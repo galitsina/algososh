@@ -11,7 +11,7 @@ import { ElementStates } from "../../types/element-states";
 
 export const SortingPage: React.FC = () => {
   const [randomArray, setRandomArray] = useState<number[]>([]);
-  const [buttonLoader, setButtonLoader] = useState({
+  const [loader, setLoader] = useState({
     ascendingLoader: false,
     descendingLoader: false,
   });
@@ -58,10 +58,10 @@ export const SortingPage: React.FC = () => {
   //bubble sort
   const bubbleSort = async (arr: number[], direction: Direction) => {
     setSortingFinished(false);
-    Direction.Descending === direction ? (setButtonLoader({
+    Direction.Descending === direction ? (setLoader({
       ascendingLoader: false,
       descendingLoader: true,
-    })) : (setButtonLoader({
+    })) : (setLoader({
       ascendingLoader: true,
       descendingLoader: false,
     }));
@@ -73,7 +73,6 @@ export const SortingPage: React.FC = () => {
     for (let i = 0; i < arr.length; i++) {
       for (let j = 0; j < arr.length -1 - i; j++) {
         setPointers({mIndex: j + 1, currentInside: j, currentOutside: i});
-        console.log(`i = ${i}, j = ${j}, j + 1 = ${j + 1}`)
         await delay(DELAY_IN_MS);
         if (
           Direction.Descending === direction
@@ -85,12 +84,11 @@ export const SortingPage: React.FC = () => {
       }
     }
     setRandomArray([...arr]);
-    console.log("bubble sorting is working now");
-    Direction.Descending === direction ? (setButtonLoader({
-      ...buttonLoader,
+    Direction.Descending === direction ? (setLoader({
+      ...loader,
       descendingLoader: false,
-    })) : (setButtonLoader({
-      ...buttonLoader,
+    })) : (setLoader({
+      ...loader,
       ascendingLoader: false,
     }));
     setButtonDisabled({
@@ -105,10 +103,10 @@ export const SortingPage: React.FC = () => {
   //selection sort
   const selectionSort = async (arr: number[], direction: Direction) => {
     setSortingFinished(false);
-    Direction.Descending === direction ? (setButtonLoader({
+    Direction.Descending === direction ? (setLoader({
       ascendingLoader: false,
       descendingLoader: true,
-    })) : (setButtonLoader({
+    })) : (setLoader({
       ascendingLoader: true,
       descendingLoader: false,
     }));
@@ -134,11 +132,11 @@ export const SortingPage: React.FC = () => {
       swap(arr, i, index);
     }
     setRandomArray([...arr]);
-    Direction.Descending === direction ? (setButtonLoader({
-      ...buttonLoader,
+    Direction.Descending === direction ? (setLoader({
+      ...loader,
       descendingLoader: false,
-    })) : (setButtonLoader({
-      ...buttonLoader,
+    })) : (setLoader({
+      ...loader,
       ascendingLoader: false,
     }));
     setButtonDisabled({
@@ -213,7 +211,7 @@ export const SortingPage: React.FC = () => {
               text={"По возрастанию"}
               type="submit"
               disabled={buttonDisabled.ascendingDisabled}
-              isLoader={buttonLoader.ascendingLoader}
+              isLoader={loader.ascendingLoader}
               sorting={Direction.Ascending}
               extraClass={styles.button}
             />
@@ -222,7 +220,7 @@ export const SortingPage: React.FC = () => {
               text={"По убыванию"}
               type="submit"
               disabled={buttonDisabled.descendingDisabled}
-              isLoader={buttonLoader.descendingLoader}
+              isLoader={loader.descendingLoader}
               sorting={Direction.Descending}
               extraClass={styles.button}
             />
