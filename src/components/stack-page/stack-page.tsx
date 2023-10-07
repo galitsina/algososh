@@ -94,7 +94,7 @@ export const StackPage: React.FC = () => {
         </form>
         <div className={styles.circles_container}>
           {stackArray.map((letter, index) => (
-            <Circle state={stackArray.length - 1 === index ? colorState : ElementStates.Default} letter={letter} key={index} tail={String(index)} head={stackArray.length - 1 === index ? 'top' : ''} />
+            <Circle state={stackArray.length - 1 === index ? colorState : ElementStates.Default} letter={letter} key={index} index={index} head={stackArray.length - 1 === index ? 'top' : ''} />
           ))}
         </div>
       </div>

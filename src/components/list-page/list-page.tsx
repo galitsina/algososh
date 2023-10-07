@@ -7,6 +7,7 @@ import { Button } from "../ui/button/button";
 import { Circle } from "../ui/circle/circle";
 import { delay } from "../../utils/utils";
 import { SHORT_DELAY_IN_MS } from "../../constants/delays";
+import { ArrowIcon } from "../ui/icons/arrow-icon";
 
 export const ListPage: React.FC = () => {
   const { values, handleChange, setValues } = useForm({ value: "", index: "" });
@@ -41,6 +42,7 @@ export const ListPage: React.FC = () => {
         {
           <div className={styles.circles_container}>
             <Circle letter={"1"} key={1} tail={"1"} />
+            <ArrowIcon />
             <Circle letter={"2"} key={2} tail={"2"} />
           </div>
         }

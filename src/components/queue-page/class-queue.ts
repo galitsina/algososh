@@ -14,11 +14,11 @@ export class Queue<T> implements IQueue<T> {
 
     constructor(size: number) {
         this.size = size;
-        this._container = Array(size);
+        this._container = Array(size).fill(null);
     }
 
     get items() {
-        return Object.values(this._container);
+        return Object.values(this._container)
     }
 
     get head() {
@@ -28,13 +28,13 @@ export class Queue<T> implements IQueue<T> {
     get tail() {
         return this._tail;
     }
-    
+
     enqueue = (item: T) => {
         if (this.length >= this.size) {
-            throw new Error("Maximum length exceeded");
+            throw new Error("Maximum length exceeded");        
         }
         this._container[this._tail] = item;
-        this._tail = (this._tail + 1) % this.size;
+        this._tail++;
         this.length++;
     };
 
@@ -42,9 +42,12 @@ export class Queue<T> implements IQueue<T> {
         if (this.isEmpty()) {
             throw new Error("No elements in the queue");
         }
-        this._container[this._head] = null;
-        this._head = (this._head + 1) % this.size;
+        const deletedItem = this._container[this.head % this.size];
+        this._container[this.head % this.size] = null;
+    
+        this._head++;
         this.length--;
+        return deletedItem;
     };
 
     peak = (): T | null => {
@@ -54,4 +57,10 @@ export class Queue<T> implements IQueue<T> {
         return this._container[this._head]
     };
 
+    clear = () => {
+        this._container = Array(this.size).fill(null);
+        this._head = 0;
+        this._tail = 0;
+        this.length = 0;
+    }
 }

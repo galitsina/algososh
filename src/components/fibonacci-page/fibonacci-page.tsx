@@ -66,7 +66,7 @@ export const FibonacciPage: React.FC = () => {
               <Circle
                 letter={String(letter)}
                 key={index}
-                tail={String(index)}
+                index={index}
               />
             ))}
           </div>

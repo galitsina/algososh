@@ -26,6 +26,8 @@
   display: flex;
   gap: 78px 16px;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .input_width {
