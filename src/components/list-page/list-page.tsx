@@ -176,7 +176,7 @@ export const ListPage: React.FC = () => {
       setAnimationState({...animationState, ...frame});
       await delay(SHORT_DELAY_IN_MS);
     }
-    setButtonActive({addHead: false, addTail: false, deleteHead: false, deleteTail: false, addByIndex: false, deleteByIndex: false});
+    setButtonActive({addHead: false, addTail: false, deleteHead: false, deleteTail: false, addByIndex: true, deleteByIndex: true});
     setLoader({ ...loader, addByIndex: false });
   }
 
