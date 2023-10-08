@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styles from "./sorting-page.module.css";
 import { RadioInput } from "../ui/radio-input/radio-input";
@@ -29,6 +29,7 @@ export const SortingPage: React.FC = () => {
   });
   const { mIndex, currentInside, currentOutside } = pointers;
 
+  useEffect(() => {createRandomArr()}, []);
   const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(e.target.value);
   };

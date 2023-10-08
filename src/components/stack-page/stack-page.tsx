@@ -14,7 +14,7 @@ export const StackPage: React.FC = () => {
   const [stackArray, setStackArray] = useState<string[]>([]);
   const stack = new Stack<string>(stackArray);
   const { values, handleChange, setValues } = useForm({ stack: "" });
-  const [isButtonActive, setButtonActive] = useState({add: false, delete: false, clear: false});
+  const [isButtonActive, setButtonActive] = useState({ add: true, delete: true, clear: true });
   const [loader, setLoader] = useState({add: false, delete: false, clear: false});
   const value = values.stack;
   const [colorState, setColorState] = useState(ElementStates.Default);
@@ -25,6 +25,7 @@ export const StackPage: React.FC = () => {
 
   const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
     handleChange(e);
+    setButtonActive({ add: false, delete: false, clear: false });
   };
 
   const add = async () => {

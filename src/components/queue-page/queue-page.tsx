@@ -16,7 +16,7 @@ export const QueuePage: React.FC = () => {
     tail: ElementStates.Default,
     head: ElementStates.Default});
   const { values, handleChange, setValues } = useForm({ queue: "" });
-  const [isButtonActive, setButtonActive] = useState({ add: false, delete: false, clear: false });
+  const [isButtonActive, setButtonActive] = useState({ add: true, delete: true, clear: true });
   const [loader, setLoader] = useState({ add: false, delete: false, clear: false });
   const value = values.queue;
 
@@ -26,6 +26,7 @@ export const QueuePage: React.FC = () => {
 
   const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
     handleChange(e);
+    setButtonActive({ add: false, delete: false, clear: false });
   };
 
   const add = async () => {
