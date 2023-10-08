@@ -39,7 +39,8 @@ export const ListPage: React.FC = () => {
   const [linkedList, setLinkedList] = useState<LinkedList<string>>(new LinkedList<string>(array));
 
   const value = values.value;
-  const index = Number(values.index);
+  const index = values.index;
+  const indexTypeNumber = Number(index);
 
   const [animationState, setAnimationState] = useState<IAnimationState>({
     colorArray: linkedList.toArray().map(item => [item, ElementStates.Default])
@@ -56,7 +57,7 @@ export const ListPage: React.FC = () => {
   const changeInputIndex = (e: ChangeEvent<HTMLInputElement>) => {
     handleChange(e);
     setButtonActive({addHead: false, addTail: false, deleteHead: false, deleteTail: false, addByIndex: false, deleteByIndex: false});
-    if (index > animationState.colorArray!.length -1) {
+    if (Number(e.target.value) > animationState.colorArray!.length -1) {
       setButtonActive({addHead: false, addTail: false, deleteHead: false, deleteTail: false, addByIndex: true, deleteByIndex: true});
     }
   };
@@ -150,11 +151,11 @@ export const ListPage: React.FC = () => {
   const addByIndex = async () => {
     setButtonActive({addHead: true, addTail: true, deleteHead: true, deleteTail: true, addByIndex: true, deleteByIndex: true});
     setLoader({ ...loader, addByIndex: true });
-    linkedList.addByIndex(value, index);
+    linkedList.addByIndex(value, indexTypeNumber);
     setValues({ value: "", index: "" });
     const frames: IAnimationState[] = [];
     const valArray = linkedList.toArray();
-    for (let i = 0; i <= index; i++) {
+    for (let i = 0; i <= indexTypeNumber; i++) {
       const tmpArray: [string, ElementStates][] = colorArray!.map((item, index) => {
         if (index < i) {
           return [item[0], ElementStates.Changing];
@@ -182,11 +183,11 @@ export const ListPage: React.FC = () => {
   const deleteByIndex = async () => {
     setButtonActive({addHead: true, addTail: true, deleteHead: true, deleteTail: true, addByIndex: true, deleteByIndex: true});
     setLoader({ ...loader, deleteByIndex: true });
-    linkedList.deleteByIndex(index);
+    linkedList.deleteByIndex(indexTypeNumber);
     setValues({ value: "", index: "" });
     const frames: IAnimationState[] = [];
     const valArray = linkedList.toArray();
-    for (let i = 0; i <= index; i++) {
+    for (let i = 0; i <= indexTypeNumber; i++) {
       const tmpArray: [string, ElementStates][] = colorArray!.map((item, index) => {
         if (index <= i) {
           return [item[0], ElementStates.Changing];
@@ -195,8 +196,8 @@ export const ListPage: React.FC = () => {
       })
       frames.push({colorArray: tmpArray});
     }
-    frames.push({removeCircle: [index, (<Circle isSmall={true} state={ElementStates.Changing} letter={value}/>)], colorArray: colorArray!.map((item, i) => {
-      if (i < index) {
+    frames.push({removeCircle: [indexTypeNumber, (<Circle isSmall={true} state={ElementStates.Changing} letter={value}/>)], colorArray: colorArray!.map((item, i) => {
+      if (i < indexTypeNumber) {
         return [item[0], ElementStates.Changing]
       }
       return [item[0], ElementStates.Default]

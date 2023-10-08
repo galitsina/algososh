@@ -18,6 +18,9 @@ export const FibonacciPage: React.FC = () => {
   const changeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setButtonActive(false);
     handleChange(e);
+    if (Number(e.target.value) > 19) {
+      setButtonActive(true);
+    }
   };
 
   const calculateFibonacci = async (number: number) => {

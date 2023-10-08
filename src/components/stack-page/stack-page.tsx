@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { SolutionLayout } from "../ui/solution-layout/solution-layout";
 import styles from "./stack-page.module.css";
 import { useForm } from "../../hooks/useForm";
@@ -52,11 +52,15 @@ export const StackPage: React.FC = () => {
     setValues({ stack: "" });
     setButtonActive({add: false, delete: false, clear: false});
     setLoader({...loader, delete: false});
+    if (stack.items.length === 0) {
+      setButtonActive({add: false, delete: true, clear: true});
+    }
   }
 
   const clearAll = () => {
     stack.clear();
     setStackArray(stack.items);
+    setButtonActive({ add: false, delete: true, clear: true });
   }
 
   return (
