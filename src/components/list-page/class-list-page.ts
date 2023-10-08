@@ -86,7 +86,7 @@ export class LinkedList<T> implements ILinkedList<T> {
     }
 
     addByIndex(value: T, index: number) {
-        if (index < 0 || index > this._size + 1) {
+        if (index < 0) {
             return;
         } else if (this._head === null || index === 0) {
             this.prepend(value);

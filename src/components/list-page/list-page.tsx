@@ -57,7 +57,7 @@ export const ListPage: React.FC = () => {
   const changeInputIndex = (e: ChangeEvent<HTMLInputElement>) => {
     handleChange(e);
     setButtonActive({addHead: false, addTail: false, deleteHead: false, deleteTail: false, addByIndex: false, deleteByIndex: false});
-    if (Number(e.target.value) > animationState.colorArray!.length -1) {
+    if ((Number(e.target.value) > animationState.colorArray!.length -1) || (Number(e.target.value) < 0)) {
       setButtonActive({addHead: false, addTail: false, deleteHead: false, deleteTail: false, addByIndex: true, deleteByIndex: true});
     }
   };
@@ -164,8 +164,8 @@ export const ListPage: React.FC = () => {
       })
       frames.push({addCircle: [i, (<Circle isSmall={true} state={ElementStates.Changing} letter={value}/>)], colorArray: tmpArray});
     }
-    frames.push({addCircle: undefined, colorArray: valArray.map(item => {
-      if (item === value) {
+    frames.push({addCircle: undefined, colorArray: valArray.map((item, i) => {
+      if (indexTypeNumber === i) {
         return [item, ElementStates.Modified]
       }
       return [item, ElementStates.Default]
