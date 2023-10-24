@@ -34,9 +34,9 @@ export const StringComponent: React.FC = () => {
     setLoader(true);
     let start = 0;
     let end = arr.length - 1;
-    
+
     while (start < end) {
-      setPointers({start, end});
+      setPointers({ start, end });
       await delay(DELAY_IN_MS);
       swap(arr, start, end);
       await delay(DELAY_IN_MS);
@@ -45,7 +45,7 @@ export const StringComponent: React.FC = () => {
       end--;
     }
     start++
-    setPointers({start, end});
+    setPointers({ start, end });
     setButtonActive(false);
     setLoader(false);
     return arr;
@@ -75,18 +75,22 @@ export const StringComponent: React.FC = () => {
             isLimitText={true}
             name="string"
             onChange={changeInput}
+            data-testid="input"
           />
           <Button
             text={"Развернуть"}
             type='submit'
             disabled={isButtonActive}
             isLoader={loader}
+            data-testid="reverse-button"
           />
         </form>
         {Boolean(letters) && (
           <div className={styles.circles_container}>
             {letters.map((letter, index) => (
-              <Circle state={defineColor(index)} letter={letter} key={index} />
+              <div key={index} data-testid={`circle-${index}`}>
+                <Circle state={defineColor(index)} letter={letter} />
+              </div>
             ))}
           </div>
         )}
