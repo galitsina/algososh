@@ -9,7 +9,11 @@ import { delay, swap } from "../../utils/utils";
 import { DELAY_IN_MS } from "../../constants/delays";
 import { ElementStates } from "../../types/element-states";
 
-export const SortingPage: React.FC = () => {
+interface ISortingPageProps {
+  arrLength?: number;
+}
+
+export const SortingPage: React.FC<ISortingPageProps> = ({arrLength = 3}) => {
   const [randomArray, setRandomArray] = useState<number[]>([]);
   const [loader, setLoader] = useState({
     ascendingLoader: false,
@@ -29,26 +33,32 @@ export const SortingPage: React.FC = () => {
   });
   const { mIndex, currentInside, currentOutside } = pointers;
 
-  useEffect(() => {createRandomArr()}, []);
+  useEffect(() => { createRandomArr(arrLength) }, []);
   const handleOptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(e.target.value);
   };
 
-  const createRandomArr = () => {
-    setPointers({mIndex: -1,
+  const createRandomArr = (arrLength?: number) => {
+
+    setPointers({
+      mIndex: -1,
       currentInside: -1,
       currentOutside: -1,
     })
-    const minLen = 3;
+    const minLen = 0;
     const maxLen = 17;
-    let randomArrLength =
-      Math.floor(Math.random() * (maxLen - minLen + 1)) + minLen;
+    let randomArrLength = arrLength;
+    if (arrLength === undefined || (arrLength < minLen || arrLength > maxLen)) {
+      randomArrLength =  Math.floor(Math.random() * (maxLen - minLen + 1)) + minLen;
+    }
+    
     let randomArr = new Array(randomArrLength);
-    for (let i = 0; i < randomArrLength; i++) {
+    for (let i = 0; i < randomArr.length; i++) {
       let randomNumber = Math.floor(Math.random() * 100);
       randomArr[i] = randomNumber;
     }
     setRandomArray([...randomArr]);
+
     return randomArr;
   };
 
@@ -72,8 +82,8 @@ export const SortingPage: React.FC = () => {
       newArrayDisabled: true
     });
     for (let i = 0; i < arr.length; i++) {
-      for (let j = 0; j < arr.length -1 - i; j++) {
-        setPointers({mIndex: j + 1, currentInside: j, currentOutside: i});
+      for (let j = 0; j < arr.length - 1 - i; j++) {
+        setPointers({ mIndex: j + 1, currentInside: j, currentOutside: i });
         await delay(DELAY_IN_MS);
         if (
           Direction.Descending === direction
@@ -159,7 +169,7 @@ export const SortingPage: React.FC = () => {
     if (mIndex === index || currentInside === index) {
       return ElementStates.Changing;
     }
-    if (selectedOption === "selection-sort" ? (index < currentOutside) : (index >randomArray.length - 1- currentOutside)) {
+    if (selectedOption === "selection-sort" ? (index < currentOutside) : (index > randomArray.length - 1 - currentOutside)) {
       return ElementStates.Modified;
     } else {
       return ElementStates.Default;
@@ -173,7 +183,7 @@ export const SortingPage: React.FC = () => {
     if (selectedOption === "bubble-sort") {
       bubbleSort(randomArray, Direction.Descending);
     };
-    
+
   };
 
   const handleAscendingSorting = () => {
@@ -227,7 +237,7 @@ export const SortingPage: React.FC = () => {
             />
           </div>
           <Button
-            onClick={createRandomArr}
+            onClick={() => {createRandomArr(arrLength)}}
             text={"Новый массив"}
             type="submit"
             disabled={buttonDisabled.newArrayDisabled}
@@ -236,7 +246,9 @@ export const SortingPage: React.FC = () => {
         </form>
         <div className={styles.arr_items}>
           {randomArray.map((item, index) => (
-            <Column index={item} key={index} state={defineColor(index)} />
+            <div key={index} data-testid={`column-${index}`}>
+              <Column index={item} state={defineColor(index)} />
+            </div>
           ))}
         </div>
       </div>
