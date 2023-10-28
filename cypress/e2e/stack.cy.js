@@ -1,6 +1,6 @@
 import { color } from '../utils/utils';
 
-describe("Fibonacci component testing", () => {
+describe("Stack component testing", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000/stack");
   });
@@ -27,7 +27,7 @@ describe("Fibonacci component testing", () => {
     cy.get('[data-cy=circle-0]').should('not.exist');
   });
 
-  it("should Check the behavior of the Clear button", () => {
+  it("should check the behavior of the Clear button", () => {
     cy.get("input").type("5");
     cy.get('[data-cy=add-button]').click();
     cy.get('[data-cy=circle-0]').should('contain', "5");
