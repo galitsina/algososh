@@ -15,7 +15,7 @@ export const StackPage: React.FC = () => {
   const stack = new Stack<string>(stackArray);
   const { values, handleChange, setValues } = useForm({ stack: "" });
   const [isButtonActive, setButtonActive] = useState({ add: true, delete: true, clear: true });
-  const [loader, setLoader] = useState({add: false, delete: false, clear: false});
+  const [loader, setLoader] = useState({ add: false, delete: false, clear: false });
   const value = values.stack;
   const [colorState, setColorState] = useState(ElementStates.Default);
 
@@ -29,31 +29,31 @@ export const StackPage: React.FC = () => {
   };
 
   const add = async () => {
-    setButtonActive({add: true, delete: true, clear: true});
-    setLoader({...loader, add: true});
+    setButtonActive({ add: true, delete: true, clear: true });
+    setLoader({ ...loader, add: true });
     stack.push(value);
     setStackArray(stack.items);
     setValues({ stack: "" });
     setColorState(ElementStates.Changing);
     await delay(SHORT_DELAY_IN_MS);
     setColorState(ElementStates.Default);
-    setButtonActive({add: false, delete: false, clear: false});
-    setLoader({...loader, add: false});
+    setButtonActive({ add: false, delete: false, clear: false });
+    setLoader({ ...loader, add: false });
   }
 
   const deleteTop = async () => {
-    setButtonActive({add: true, delete: true, clear: true});
-    setLoader({...loader, delete: true});
+    setButtonActive({ add: true, delete: true, clear: true });
+    setLoader({ ...loader, delete: true });
     setColorState(ElementStates.Changing);
     await delay(SHORT_DELAY_IN_MS);
     setColorState(ElementStates.Default);
     stack.pop();
     setStackArray(stack.items);
     setValues({ stack: "" });
-    setButtonActive({add: false, delete: false, clear: false});
-    setLoader({...loader, delete: false});
+    setButtonActive({ add: false, delete: false, clear: false });
+    setLoader({ ...loader, delete: false });
     if (stack.items.length === 0) {
-      setButtonActive({add: false, delete: true, clear: true});
+      setButtonActive({ add: false, delete: true, clear: true });
     }
   }
 
@@ -80,6 +80,7 @@ export const StackPage: React.FC = () => {
             type="button"
             disabled={isButtonActive.add}
             isLoader={loader.add}
+            data-cy="add-button"
           />
           <Button
             onClick={deleteTop}
@@ -87,6 +88,7 @@ export const StackPage: React.FC = () => {
             type="button"
             disabled={isButtonActive.delete}
             isLoader={loader.delete}
+            data-cy="remove-button"
           />
           <Button
             onClick={clearAll}
@@ -95,11 +97,14 @@ export const StackPage: React.FC = () => {
             extraClass={styles.margin_left}
             disabled={isButtonActive.clear}
             isLoader={loader.clear}
+            data-cy="clear-button"
           />
         </form>
         <div className={styles.circles_container}>
           {stackArray.map((letter, index) => (
-            <Circle state={stackArray.length - 1 === index ? colorState : ElementStates.Default} letter={letter} key={index} index={index} head={stackArray.length - 1 === index ? 'top' : ''} />
+            <div data-cy={`circle-${index}`}>
+              <Circle state={stackArray.length - 1 === index ? colorState : ElementStates.Default} letter={letter} key={index} index={index} head={stackArray.length - 1 === index ? 'top' : ''} />
+            </div>
           ))}
         </div>
       </div>
