@@ -1,6 +1,8 @@
+import {testUrl} from '../utils/utils';
+
 describe("app works correctly with routes", function () {
     beforeEach(() => {
-    cy.visit("http://localhost:3000");
+    cy.visit(testUrl);
   });
 
   it("should open homepage", () => {

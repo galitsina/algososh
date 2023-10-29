@@ -1,6 +1,8 @@
+import {testUrl, circleSelectorAll} from '../utils/utils';
+
 describe("Fibonacci component testing", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/fibonacci");
+    cy.visit(`${testUrl}/fibonacci`);
   });
 
   it("if the input is empty, then the add button is not available", () => {
@@ -13,8 +15,8 @@ describe("Fibonacci component testing", () => {
     cy.get('[data-cy=calculate-button]').click();
 
     const fibonacciNumbers = [1, 1, 2, 3, 5, 8];
-    cy.get('[data-cy^=circle-]').each((item, index) => {
-        cy.get('[data-cy^=circle-]').should('have.length', fibonacciNumbers.length);
+    cy.get(circleSelectorAll).each((item, index) => {
+        cy.get(circleSelectorAll).should('have.length', fibonacciNumbers.length);
         cy.wrap(item).should('contain', String(fibonacciNumbers[index]));
     });
   });

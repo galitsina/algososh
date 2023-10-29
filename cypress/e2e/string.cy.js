@@ -1,20 +1,20 @@
-import { color } from '../utils/utils';
+import { color, testUrl } from '../utils/utils';
+
+const input = '[data-testid=input]';
+const button = '[data-testid=reverse-button]';
+const circle  = '[data-testid^=circle-]';
 
 describe("String component testing", () => {
     beforeEach(() => {
-        cy.visit('http://localhost:3000/recursion');
+        cy.visit(`${testUrl}/recursion`);
       });
 
     it("if the input is empty, then the add button is not available", () => {
-        cy.get('[data-testid=input]').should('be.empty');
-        cy.get('[data-testid=reverse-button]').should('be.disabled');
+        cy.get(input).should('be.empty');
+        cy.get(button).should('be.disabled');
     });
 
     it("should expand the string correctly", () => {
-        const input = '[data-testid=input]';
-        const button = '[data-testid=reverse-button]';
-        const circle  = '[data-testid^=circle-]';
-
         cy.get(input).type('hey');
         for(let i = 0; i < 3; i++) {       
             cy.get(`[data-testid=circle-${i}]`).find('div>div[class^="circle"]').should('have.css', 'border-color', color.default);
