@@ -217,16 +217,16 @@ export const ListPage: React.FC = () => {
       <div className={styles.container}>
         <form name="linked-list" className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.form_container}>
-            <Input value={value} maxLength={4} isLimitText={true} name="value" onChange={changeInputValue} extraClass={styles.input_width} placeholder="Введите значение" />
-            <Button onClick={addHead} text={"Добавить в head"} type="button" disabled={isButtonActive.addHead} isLoader={loader.addHead} />
-            <Button onClick={addTail} text={"Добавить в tail"} type="button" disabled={isButtonActive.addTail} isLoader={loader.addTail} />
-            <Button onClick={deleteHead} text={"Удалить из head"} type="button" disabled={isButtonActive.deleteHead} isLoader={loader.deleteHead} />
-            <Button onClick={deleteTail} text={"Удалить из tail"} type="button" disabled={isButtonActive.deleteTail} isLoader={loader.deleteTail} />
+            <Input data-cy="input-value" value={value} maxLength={4} isLimitText={true} name="value" onChange={changeInputValue} extraClass={styles.input_width} placeholder="Введите значение" />
+            <Button data-cy="add-head-button" onClick={addHead} text={"Добавить в head"} type="button" disabled={isButtonActive.addHead} isLoader={loader.addHead} />
+            <Button data-cy="add-tail-button" onClick={addTail} text={"Добавить в tail"} type="button" disabled={isButtonActive.addTail} isLoader={loader.addTail} />
+            <Button data-cy="delete-head-button" onClick={deleteHead} text={"Удалить из head"} type="button" disabled={isButtonActive.deleteHead} isLoader={loader.deleteHead} />
+            <Button data-cy="delete-tail-button" onClick={deleteTail} text={"Удалить из tail"} type="button" disabled={isButtonActive.deleteTail} isLoader={loader.deleteTail} />
           </div>
           <div className={styles.form_container}>
-            <Input value={index} name="index" onChange={changeInputIndex} extraClass={styles.input_width} placeholder="Введите индекс" type="number" />
-            <Button onClick={addByIndex} text={"Добавить по индексу"} type="button" disabled={isButtonActive.addByIndex} isLoader={loader.addByIndex} extraClass={styles.button_width} />
-            <Button onClick={deleteByIndex} text={"Удалить по индексу"} type="button" disabled={isButtonActive.deleteByIndex} isLoader={loader.deleteByIndex} extraClass={styles.button_width} />
+            <Input data-cy="input-index" value={index} name="index" onChange={changeInputIndex} extraClass={styles.input_width} placeholder="Введите индекс" type="number" />
+            <Button data-cy="add-by-index-button" onClick={addByIndex} text={"Добавить по индексу"} type="button" disabled={isButtonActive.addByIndex} isLoader={loader.addByIndex} extraClass={styles.button_width} />
+            <Button data-cy="delete-by-index-button" onClick={deleteByIndex} text={"Удалить по индексу"} type="button" disabled={isButtonActive.deleteByIndex} isLoader={loader.deleteByIndex} extraClass={styles.button_width} />
           </div>
         </form>
         <div className={styles.circles_container}>
@@ -247,7 +247,7 @@ export const ListPage: React.FC = () => {
               addCircleIndex = addCircle[0]
             }
             return (
-            <div key={index} className={styles.circle_wrapper}>
+            <div key={index} className={styles.circle_wrapper} data-cy={`circle-${index}`}>
               <Circle 
               letter={removeCircleIndex === index ? "" : letter}         
               index={index} 

@@ -56,23 +56,27 @@ export const FibonacciPage: React.FC = () => {
             isLimitText={true}
             name="fibonacci"
             onChange={changeInput}
+            data-cy="fibonacci-input"
           />
           <Button
             text={"Рассчитать"}
             type='submit'
             disabled={isButtonActive}
             isLoader={loader}
+            data-cy="calculate-button"
           />
-        </form>      
-          <div className={styles.circles_container}>
-            {fibArray.map((letter, index) => (
+        </form>
+        <div className={styles.circles_container}>
+          {fibArray.map((letter, index) => (
+            <div data-cy={`circle-${index}`}>
               <Circle
                 letter={String(letter)}
                 key={index}
                 index={index}
               />
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
       </div>
     </SolutionLayout>
   );

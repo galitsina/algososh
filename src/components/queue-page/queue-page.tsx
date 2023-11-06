@@ -63,9 +63,9 @@ export const QueuePage: React.FC = () => {
       <div className={styles.container}>
         <form name="queue" className={styles.form} onSubmit={handleSubmit}>
           <Input maxLength={4} value={value} isLimitText={true} name="queue" onChange={changeInput} />
-          <Button onClick={add} text={"Добавить"} type="button" disabled={isButtonActive.add} isLoader={loader.add} />
-          <Button onClick={deleteHead} text={"Удалить"} type="button" disabled={isButtonActive.delete} isLoader={loader.delete} />
-          <Button onClick={clearAll} text={"Очистить"} type="button" extraClass={styles.margin_left} disabled={isButtonActive.clear} isLoader={loader.clear} />
+          <Button data-cy="add-button" onClick={add} text={"Добавить"} type="button" disabled={isButtonActive.add} isLoader={loader.add} />
+          <Button data-cy="remove-button" onClick={deleteHead} text={"Удалить"} type="button" disabled={isButtonActive.delete} isLoader={loader.delete} />
+          <Button data-cy="clear-button" onClick={clearAll} text={"Очистить"} type="button" extraClass={styles.margin_left} disabled={isButtonActive.clear} isLoader={loader.clear} />
         </form>
         <div className={styles.circles_container}>
           {queue.items.map((item, index) => {
@@ -76,13 +76,13 @@ export const QueuePage: React.FC = () => {
             } else if (queue.head === index) {
               wrappedColor = colorState.head;
             }
-            return (<Circle 
+            return (<div data-cy={`circle-${index}`}><Circle 
               letter={wrappedLetter} 
               key={index} 
               index={index} 
               state={wrappedColor} 
               tail={queue.tail - 1 === index ? "tail" : ""} 
-              head={!queue.isEmpty() && queue.head === index ? "head" : ""} />)
+              head={!queue.isEmpty() && queue.head === index ? "head" : ""} /></div>)
           })}
         </div>
       </div>
